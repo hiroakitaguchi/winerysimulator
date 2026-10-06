@@ -1,0 +1,265 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project:/Assets/UI/ComputerUI/ComputerScreen.uss" />
+    <ui:VisualElement name="ComputerScreenContainer" style="width: 100%; height: 100%; background-color: rgb(20, 30, 40); padding: 10px;">
+        <!-- Контейнер для денег игрока - четко в правом верхнем углу -->
+        <ui:VisualElement name="PlayerMoneyContainer" style="position: absolute; top: 10px; right: 10px; flex-direction: row; align-items: center; background-color: rgba(25, 40, 55, 0.9); padding: 8px 15px; border-radius: 8px; border-left-width: 3px; border-left-color: rgb(76, 175, 80); z-index: 999;">
+            <ui:Label text="💰" style="font-size: 18px; margin-right: 8px;" />
+            <ui:Label name="PlayerMoneyLabel" text="$0.00" style="font-size: 16px; color: rgb(76, 175, 80); -unity-font-style: bold;" />
+        </ui:VisualElement>
+        
+        <!-- Контейнер для уведомлений - поверх денег, но сдвинут вниз -->
+        <ui:VisualElement name="ComputerNotificationContainer" style="position: absolute; top: 50px; right: 10px; width: 300px; flex-direction: column; z-index: 1000;" />
+        
+        <ui:Label text="店舗管理システム" name="ScreenTitle" style="font-size: 20px; -unity-text-align: upper-center; margin-bottom: 15px; color: rgb(220, 220, 220);" />
+
+        <!-- Основные вкладки -->
+        <ui:VisualElement name="MainTabsContainer" style="flex-direction: row; margin-bottom: 10px;">
+            <ui:Button text="ショップ" name="TabShop" class="tab-button active-tab" />
+            <ui:Button text="価格設定" name="TabManagePrices" class="tab-button" />
+            <ui:Button text="ライセンス" name="TabLicenses" class="tab-button" />
+            <ui:Button text="統計" name="TabStatistics" class="tab-button" />
+            <ui:Button text="店舗設定" name="TabStoreSettings" class="tab-button" />
+        </ui:VisualElement>
+
+        <!-- Секция Магазина -->
+        <ui:VisualElement name="ShopSection" style="flex-grow: 1; background-color: rgb(30, 45, 60); padding: 15px; border-radius: 5px;">
+            <!-- Подвкладки магазина -->
+            <ui:VisualElement name="ShopSubTabsContainer" style="flex-direction: row; margin-bottom: 15px;">
+                <ui:Button text="商品" name="SubTabGoods" class="sub-tab-button active-sub-tab" />
+                <ui:Button text="家具" name="SubTabFurniture" class="sub-tab-button" />
+                <ui:Button text="進行中の注文" name="SubTabActiveOrders" class="sub-tab-button" />
+            </ui:VisualElement>
+
+            <!-- Секция Товаров -->
+            <ui:VisualElement name="GoodsSection" style="flex-grow: 1; flex-direction: row;">
+                <!-- Вертикальные подкатегории товаров -->
+                <ui:VisualElement name="SubcategoriesPanel" style="width: 200px; background-color: rgb(25, 40, 55); padding: 10px; border-radius: 5px; margin-right: 15px;">
+                    <ui:Label text="カテゴリ" style="font-size: 14px; margin-bottom: 10px; color: rgb(220, 220, 220); -unity-font-style: bold; -unity-text-align: upper-center;" />
+                    <ui:VisualElement name="SubcategoriesContainer" style="flex-grow: 1;">
+                        <!-- Подкатегории будут добавляться динамически -->
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                
+                <!-- Правая панель с товарами и корзиной -->
+                <ui:VisualElement style="flex-grow: 1; flex-direction: column;">
+                    <!-- Корзина (справа сверху) -->
+                    <ui:VisualElement name="CartSummary" style="flex-direction: row; align-items: center; justify-content: flex-end; margin-bottom: 15px; background-color: rgb(15, 52, 96); padding: 10px 15px; border-radius: 5px;">
+                        <ui:Label text="🛒" style="font-size: 18px; margin-right: 10px;" />
+                        <ui:Label name="CartItemCount" text="0個" style="color: rgb(220, 220, 220); margin-right: 20px; font-size: 14px;" />
+                        <ui:Label name="CartTotalAmount" text="$0" style="color: rgb(76, 175, 80); font-size: 16px; -unity-font-style: bold;" />
+                    </ui:VisualElement>
+                    
+                    <!-- Сетка карточек товаров -->
+                    <ui:ScrollView name="ProductOrderList" style="flex-grow: 1; margin-bottom: 15px;">
+                        <ui:VisualElement name="ProductCardsContainer" style="flex-direction: row; flex-wrap: wrap; justify-content: flex-start; padding: 10px;">
+                            <!-- Карточки товаров будут добавляться динамически -->
+                        </ui:VisualElement>
+                    </ui:ScrollView>
+
+                    <!-- Кнопка оформления заказа -->
+                    <ui:VisualElement style="flex-direction: row; justify-content: center;">
+                        <ui:Button text="注文する" name="SubmitOrderButton" style="height: 45px; font-size: 16px; padding: 0 40px; background-color: rgb(76, 175, 80); color: white; border-radius: 5px; border-width: 0; -unity-font-style: bold;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- Секция Мебели -->
+            <ui:VisualElement name="FurnitureSection" style="flex-grow: 1; display: none; flex-direction: row;">
+                <!-- Вертикальные подкатегории мебели -->
+                <ui:VisualElement name="FurnitureSubcategoriesPanel" style="width: 200px; background-color: rgb(25, 40, 55); padding: 10px; border-radius: 5px; margin-right: 15px;">
+                    <ui:Label text="カテゴリ" style="font-size: 14px; margin-bottom: 10px; color: rgb(220, 220, 220); -unity-font-style: bold; -unity-text-align: upper-center;" />
+                    <ui:VisualElement name="FurnitureSubcategoriesContainer" style="flex-grow: 1;">
+                        <!-- Подкатегории мебели будут добавляться динамически -->
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                
+                <!-- Правая панель с мебелью и корзиной -->
+                <ui:VisualElement style="flex-grow: 1; flex-direction: column;">
+                    <!-- Корзина для мебели -->
+                    <ui:VisualElement name="FurnitureCartSummary" style="flex-direction: row; align-items: center; justify-content: flex-end; margin-bottom: 15px; background-color: rgb(15, 52, 96); padding: 10px 15px; border-radius: 5px;">
+                        <ui:Label text="🏪" style="font-size: 18px; margin-right: 10px;" />
+                        <ui:Label name="FurnitureCartItemCount" text="0点" style="color: rgb(220, 220, 220); margin-right: 20px; font-size: 14px;" />
+                        <ui:Label name="FurnitureCartTotalAmount" text="$0" style="color: rgb(76, 175, 80); font-size: 16px; -unity-font-style: bold;" />
+                    </ui:VisualElement>
+                    
+                    <!-- Сетка карточек мебели -->
+                    <ui:ScrollView name="FurnitureList" style="flex-grow: 1; margin-bottom: 15px;">
+                        <ui:VisualElement name="FurnitureCardsContainer" style="flex-direction: row; flex-wrap: wrap; justify-content: flex-start; padding: 10px;">
+                            <!-- Карточки мебели будут добавляться динамически -->
+                        </ui:VisualElement>
+                    </ui:ScrollView>
+
+                    <!-- Кнопка оформления заказа мебели -->
+                    <ui:VisualElement style="flex-direction: row; justify-content: center;">
+                        <ui:Button text="家具を注文" name="SubmitFurnitureOrderButton" style="height: 45px; font-size: 16px; padding: 0 40px; background-color: rgb(76, 175, 80); color: white; border-radius: 5px; border-width: 0; -unity-font-style: bold;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- Секция Активных Заказов (теперь внутри магазина) -->
+            <ui:VisualElement name="ActiveOrdersSection" style="flex-grow: 1; display: none;">
+                <ui:Label text="進行中の注文" style="font-size: 16px; margin-bottom: 10px; color: rgb(210, 210, 210);" />
+                <ui:Label text="注文の状況と配達までの時間を確認できます" style="font-size: 12px; margin-bottom: 15px; color: rgb(150, 150, 150);" />
+                
+                <!-- Orders Container -->
+                <ui:ScrollView name="ActiveOrdersScrollView" style="flex-grow: 1;">
+                    <ui:VisualElement name="ActiveOrdersContainer" style="flex-direction: column;">
+                        <!-- Order cards will be generated dynamically -->
+                    </ui:VisualElement>
+                </ui:ScrollView>
+                
+                <!-- Order Card Template (hidden, used for cloning) -->
+                <ui:VisualElement name="OrderCardTemplate" style="display: none; margin-bottom: 15px; padding: 15px; background-color: rgb(25, 40, 55); border-radius: 8px; border-left-width: 4px; border-left-color: rgb(76, 175, 80);">
+                    <!-- Заголовок заказа -->
+                    <ui:VisualElement name="OrderHeader" style="flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <ui:Label name="OrderId" text="注文 #12345678" style="font-size: 16px; color: white; -unity-font-style: bold;" />
+                        <ui:Label name="OrderStatus" text="配送中" style="font-size: 12px; color: rgb(76, 175, 80); background-color: rgb(15, 52, 96); padding: 4px 12px; border-radius: 12px;" />
+                    </ui:VisualElement>
+                    
+                    <!-- Информация о времени -->
+                    <ui:VisualElement name="OrderTimeInfo" style="flex-direction: row; justify-content: space-between; margin-bottom: 10px;">
+                        <ui:VisualElement style="flex-direction: column;">
+                            <ui:Label text="注文時刻:" style="font-size: 11px; color: rgb(150, 150, 150);" />
+                            <ui:Label name="OrderTime" text="12:34" style="font-size: 13px; color: rgb(200, 200, 200);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-direction: column; align-items: flex-end;">
+                            <ui:Label text="残り:" style="font-size: 11px; color: rgb(150, 150, 150);" />
+                            <ui:Label name="TimeRemaining" text="2:30" style="font-size: 14px; color: rgb(255, 200, 50); -unity-font-style: bold;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    
+                    <!-- Список товаров в заказе -->
+                    <ui:VisualElement name="OrderItems" style="background-color: rgb(15, 52, 96); padding: 10px; border-radius: 4px; margin-bottom: 10px;">
+                        <ui:Label text="注文内容:" style="font-size: 12px; color: rgb(170, 170, 170); margin-bottom: 5px;" />
+                        <ui:VisualElement name="OrderItemsList" style="flex-direction: column;">
+                            <!-- Order items will be added here dynamically -->
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    
+                    <!-- Стоимость и кнопка отмены -->
+                    <ui:VisualElement name="OrderFooter" style="flex-direction: row; justify-content: space-between; align-items: center;">
+                        <ui:Label name="OrderTotal" text="合計: $1,500" style="font-size: 16px; color: rgb(76, 175, 80); -unity-font-style: bold;" />
+                        <ui:Button name="CancelOrderButton" text="注文を取り消す" style="padding: 6px 12px; background-color: rgb(233, 69, 96); color: white; border-radius: 4px; border-width: 0;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Секция Управления Ценами -->
+        <ui:VisualElement name="ManagePricesSection" style="flex-grow: 1; background-color: rgb(30, 45, 60); padding: 15px; border-radius: 5px; display: none;">
+            <ui:Label text="販売価格の設定" style="font-size: 16px; margin-bottom: 10px; color: rgb(210, 210, 210);" />
+            <ui:ScrollView name="ProductPriceList" style="flex-grow: 1; margin-bottom: 10px; background-color: rgb(25, 40, 55);">
+                <!-- Элементы списка товаров для управления ценами будут добавляться из кода -->
+            </ui:ScrollView>
+        </ui:VisualElement>
+
+        <!-- Секция Статистики -->
+        <ui:VisualElement name="StatisticsSection" style="flex-grow: 1; background-color: rgb(30, 45, 60); padding: 15px; border-radius: 5px; display: none;">
+            <ui:Label text="店舗の統計" style="font-size: 16px; margin-bottom: 10px; color: rgb(210, 210, 210);" />
+            
+            <!-- Финансовая статистика -->
+            <ui:VisualElement name="FinancialStats" style="background-color: rgb(25, 40, 55); padding: 10px; margin-bottom: 10px; border-radius: 3px;">
+                <ui:Label text="収支" style="font-size: 14px; color: rgb(255, 200, 50); margin-bottom: 5px; -unity-font-style: bold;" />
+                <ui:VisualElement style="flex-direction: row; justify-content: space-between; margin-bottom: 3px;">
+                    <ui:Label text="総収入:" style="color: rgb(180, 180, 180);" />
+                    <ui:Label name="TotalRevenueLabel" text="$0.00" style="color: rgb(50, 255, 50); -unity-font-style: bold;" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-direction: row; justify-content: space-between; margin-bottom: 3px;">
+                    <ui:Label text="総支出:" style="color: rgb(180, 180, 180);" />
+                    <ui:Label name="TotalExpensesLabel" text="$0.00" style="color: rgb(255, 100, 100); -unity-font-style: bold;" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-direction: row; justify-content: space-between; border-top-width: 1px; border-top-color: rgb(60, 60, 60); padding-top: 3px;">
+                    <ui:Label text="純利益:" style="color: rgb(200, 200, 200); -unity-font-style: bold;" />
+                    <ui:Label name="ProfitLabel" text="$0.00" style="color: white; -unity-font-style: bold;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            
+            <!-- Статистика покупателей -->
+            <ui:VisualElement name="CustomerStats" style="background-color: rgb(25, 40, 55); padding: 10px; margin-bottom: 10px; border-radius: 3px;">
+                <ui:Label text="来店客" style="font-size: 14px; color: rgb(100, 200, 255); margin-bottom: 5px; -unity-font-style: bold;" />
+                <ui:VisualElement style="flex-direction: row; justify-content: space-between; margin-bottom: 3px;">
+                    <ui:Label text="接客した人数:" style="color: rgb(180, 180, 180);" />
+                    <ui:Label name="TotalCustomersLabel" text="0" style="color: white;" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-direction: row; justify-content: space-between; margin-bottom: 3px;">
+                    <ui:Label text="今日:" style="color: rgb(180, 180, 180);" />
+                    <ui:Label name="CustomersTodayLabel" text="0" style="color: white;" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-direction: row; justify-content: space-between;">
+                    <ui:Label text="平均客単価:" style="color: rgb(180, 180, 180);" />
+                    <ui:Label name="AverageTransactionLabel" text="$0.00" style="color: white;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            
+            <!-- Статистика товаров -->
+            <ui:VisualElement name="ProductStats" style="background-color: rgb(25, 40, 55); padding: 10px; border-radius: 3px;">
+                <ui:Label text="商品" style="font-size: 14px; color: rgb(255, 150, 100); margin-bottom: 5px; -unity-font-style: bold;" />
+                <ui:VisualElement style="flex-direction: row; justify-content: space-between; margin-bottom: 3px;">
+                    <ui:Label text="販売した商品数:" style="color: rgb(180, 180, 180);" />
+                    <ui:Label name="TotalItemsSoldLabel" text="0" style="color: white;" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-direction: row; justify-content: space-between;">
+                    <ui:Label text="いちばん売れた商品:" style="color: rgb(180, 180, 180);" />
+                    <ui:Label name="BestSellingProductLabel" text="—" style="color: white;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Секция Лицензий -->
+        <ui:VisualElement name="LicensesSection" style="flex-grow: 1; background-color: rgb(30, 45, 60); padding: 15px; border-radius: 5px; display: none;">
+            <ui:Label text="商品ライセンス" style="font-size: 16px; margin-bottom: 10px; color: rgb(210, 210, 210);" />
+            <ui:Label text="ライセンスを買うと新しい商品を扱えます" style="font-size: 12px; margin-bottom: 15px; color: rgb(150, 150, 150);" />
+            
+            <!-- License Cards Container -->
+            <ui:ScrollView name="LicensesScrollView" style="flex-grow: 1;">
+                <ui:VisualElement name="LicensesContainer" style="flex-direction: row; flex-wrap: wrap; justify-content: flex-start;">
+                    <!-- License cards will be generated dynamically -->
+                </ui:VisualElement>
+            </ui:ScrollView>
+            
+            <!-- License Card Template (hidden, used for cloning) -->
+            <ui:VisualElement name="LicenseCardTemplate" style="display: none; width: 300px; margin: 10px; padding: 15px; background-color: rgb(22, 33, 62); border-radius: 8px; border-width: 1px; border-color: rgb(15, 52, 96);">
+                <ui:VisualElement name="CardHeader" style="flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <ui:Label name="LicenseName" text="License Name" style="font-size: 18px; color: white; -unity-font-style: bold;" />
+                    <ui:Label name="ProductCount" text="5商品" style="font-size: 12px; color: rgb(170, 170, 170); background-color: rgb(15, 52, 96); padding: 2px 8px; border-radius: 12px;" />
+                </ui:VisualElement>
+                
+                <ui:Label name="Description" text="License description" style="font-size: 14px; color: rgb(204, 204, 204); margin-bottom: 10px; white-space: normal;" />
+                
+                <ui:VisualElement name="ProductsList" style="margin-bottom: 15px; padding: 10px; background-color: rgb(15, 52, 96); border-radius: 4px;">
+                    <!-- Product items will be added here -->
+                </ui:VisualElement>
+                
+                <ui:VisualElement name="CardFooter" style="flex-direction: row; justify-content: space-between; align-items: center;">
+                    <ui:Label name="Price" text="$500" style="font-size: 20px; color: rgb(76, 175, 80); -unity-font-style: bold;" />
+                    <ui:Button name="PurchaseButton" text="購入" style="padding: 8px 16px; background-color: rgb(233, 69, 96); color: white; border-radius: 4px; border-width: 0;" />
+                    <ui:Label name="PurchasedLabel" text="購入済み" style="display: none; font-size: 14px; color: rgb(76, 175, 80); -unity-font-style: bold;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Секция Настроек Магазина -->
+        <ui:VisualElement name="StoreSettingsSection" style="flex-grow: 1; background-color: rgb(30, 45, 60); padding: 15px; border-radius: 5px; display: none;">
+            <ui:Label text="店舗設定" style="font-size: 16px; margin-bottom: 10px; color: rgb(210, 210, 210); -unity-font-style: bold;" />
+            <ui:Label text="お店の設定を変更できます" style="font-size: 12px; margin-bottom: 20px; color: rgb(150, 150, 150);" />
+            
+            <!-- Настройка названия магазина -->
+            <ui:VisualElement name="StoreNameSettingsRow" style="background-color: rgb(25, 40, 55); padding: 15px; margin-bottom: 15px; border-radius: 5px;">
+                <ui:Label text="店名" style="font-size: 14px; color: rgb(255, 200, 50); margin-bottom: 10px; -unity-font-style: bold;" />
+                <ui:Label text="スーパーの名前を変更します。入口の上に3D文字で表示されます（看板に出せるのはキリル文字のみ）。" style="font-size: 12px; color: rgb(180, 180, 180); margin-bottom: 15px; white-space: normal;" />
+                
+                <ui:VisualElement style="flex-direction: row; align-items: center; flex-wrap: wrap;">
+                    <ui:Label text="店名:" style="color: rgb(200, 200, 200); margin-right: 15px; margin-bottom: 10px; min-width: 80px;" />
+                    <ui:TextField name="StoreNameField" placeholder-text="店名を入力" style="width: 300px; margin-right: 15px; margin-bottom: 10px; background-color: rgb(40, 40, 40); border-color: rgb(76, 175, 80); border-width: 2px; border-radius: 4px; color: rgb(255, 255, 255); padding: 8px; font-size: 14px;" />
+                    <ui:Label name="StoreNameFeedback" text="" style="color: rgb(76, 175, 80); font-size: 12px; margin-left: 15px; margin-bottom: 10px; -unity-font-style: bold; display: none;" />
+                    <ui:Button name="ChangeStoreNameButton" text="店名を変更" style="padding: 8px 16px; background-color: rgb(76, 175, 80); color: white; border-radius: 4px; border-width: 0; -unity-font-style: bold; margin-bottom: 10px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            
+            <!-- Здесь можно добавить другие настройки в будущем -->
+            <ui:VisualElement name="AdditionalSettingsContainer" style="flex-grow: 1;">
+                <ui:Label text="その他の設定は今後のアップデートで追加予定です" style="font-size: 12px; color: rgb(120, 120, 120); -unity-text-align: middle-center; margin-top: 50px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML> 
